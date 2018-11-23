@@ -1,0 +1,1397 @@
+'ANOTAÇÕES - CURSO - VBAHelp - 04.08.18
+
+'Esse é um resumo do curso do Youtube que fiz sobre VBA da sessão de vídeos de 2 técnicos abaixo:
+https://www.youtube.com/watch?v=torlSHv5cOI&index=2&list=PL6qGoGo_9939ZAmbZc283iNtKanuPiovh
+https://www.youtube.com/watch?v=fp6PTbU7bXo&index=3&list=PL3A6U40JUYCi4njVx59-vaUxYkG0yRO4m
+
+'1. Introdução
+
+'Macro: um dos termos mais utilizados. Uma macro é um conjunto de instruções que devem ser executadas de forma lógica para
+'obter um determinado resultado. Por exemplo, uma macro para criar um gráfico com os registros dos últimos 12 meses de 
+'produção de uma empresa.
+
+'Módulos: É um conjunto de procedimentos (procedures) agrupados, que podem ser visualizados ou editados através do 
+'VBE (Visual Basic Editor). Os módulos são armazenados em uma pasta de trabalho do Excel (workbook).
+
+'DICA PRÁTICA: É uma boa prática salvar os códigos criados dentro de Módulos, salvar códigos dentro de Planilhas é um risco grande 
+'já que elas podem ser deletadas.
+
+'Procedures: Uma procedure ou procedimento em tradução livre, é uma unidade do código que executa uma determinada ação. 
+'Uma procedure é basicamente uma macro, e as mais utilizadas são as do tipo Sub e as do tipo Function. A Procedure Sub não
+'retorna valor, já a Procedure Function retorna um valor para a linha de código que a executa.
+
+'Classes: A classe define um objeto, determina que tipo de objeto ele é. 
+'Objetos da mesma classe tem os mesmos métodos e propriedades.
+'https://www.youtube.com/watch?v=rd1QSLDBrnc&index=17&list=PL3A6U40JUYCi4njVx59-vaUxYkG0yRO4m
+
+'Propriedades: As propriedades são como configurações de um objeto. Algumas propriedades podem ser mudadas e outras não. 
+'Por exemplo: objetos da classe Range possuem uma propriedade chamada Address, que contém o endereço da célula ou intervalo
+'a que se refere o objeto. Essa é uma propriedade do objeto que não pode ser alterada. Já outras propriedades podem sofrer 
+'alterações. Os mesmos objetos da classe Range possuem outra propriedade chamada Value, que contém o valor dentro da célula 
+'ou intervalo. Esse valor pode ser mudado a qualquer momento.
+
+'Métodos: Os métodos são ações que podem ser executadas com um objeto. Usando o mesmo objeto da classe Range, podemos por exemplo,
+'chamar o método ClearContents, que limpa todo o conteúdo do objeto.
+
+'Coleções: As coleções são grupos que contém vários objetos de um mesmo tipo. Por exemplo a coleção Workbooks contém vários objetos do
+'tipo Workbook (mais especificamente as pastas de trabalho abertas)
+
+'Eventos: Cada Procedure executada dentro do VBA (por exemplo abrir uma planilha) é considerado um evento.
+'Os eventos podem ser encontrados pelo caminho Desenvolvedor > Visual Basic > Duplo clique em um dos Objetos dentro de Projeto > 
+'Selecione Workbook no primeiro filtro > Veja que no segundo filtro todos os eventos daquela planilha (o primeiro se chama Open,
+'por exemplo).
+
+'2. Procedures do Tipo Sub
+
+'2.1. Exibindo Caixas de mensagens
+
+'Criamos uma macro para exibir esta mensagem utilizando o GUI do VBE-Visual Basic Editor
+'Podemos digitar o comando na tela também escrevendo somente Sub 
+
+Public Sub Exibir_Mensagem()
+
+MsgBox "Olá, esta é uma mensagem de teste!"
+
+End Sub
+
+'DICA PRÁTICA: Comando para acessar classes e métodos do VBA: F2
+'Acessando Classes, eu consigo acessar as Propriedades e Métodos daquela classe
+'Por exemplo, Worksheets é uma classe e dentro dela temos o método Delete, que utilizamos no exemplo para excluir uma aba da planilha
+
+'2.2. Renomeando uma planilha
+
+Sub Renomear_Planilha()
+'Aqui nomeamos a Procedure 
+
+Dim NomePlanilha As String
+'Dim significa 'Dimension', é a forma de declarar uma variável no VBA
+
+NomePlanilha = "Minha Planilha"
+'Definimos o nome da variável aqui
+
+Worksheets(1).Name = NomePlanilha
+'Aqui acessamos a classe Worksheets e definimos que a primeira aba(1) será nomeada com NomePlanilha através do método 'Name'
+
+End Sub
+
+'2.3. Excluindo uma planilha 
+
+Sub ExcluirPlanilha()
+
+Worksheets(1).Delete
+
+End Sub
+
+'2.4. Inserindo valores nas células 
+
+Sub Preencher_Celula_Na_Planilha()
+
+Worksheets(1).Range("A1").Value = "André"
+'Aqui preenchemos na primeira aba(Worksheets(1)) da planilha, na célula A1 com o valor André
+'O método Range() acessa a célula e Value insere o valor nele 
+
+End Sub
+
+'3. Procedures do tipo Function
+
+'3.1. Function sem parâmetros definidos 
+
+'DICA PRÁTICA: o resultado da função criada deve ser alocado em uma variável de mesmo nome da função, para que ela funcione corretamente
+
+Function Meu_nome()
+    
+    Meu_nome = "André"
+
+'Quando eu no excel executar a função '=Meu_nome()' ela irá retornar André como resultado
+
+End Function 
+
+'3.2. Function com parâmetros definidos 
+
+Function Somar_2(num1, num2)
+
+    Somar_2 = num1 + num2
+
+'Quando eu no excel executar a função '=Somar_2' ela irá retornar a soma dos dois números selecionados 
+
+End Function 
+
+'4. Gravador de Macros
+
+'O gravador de MACRO é uma forma mais rápida de gravar as Procedures, mas é importante lembrar que 
+'essa forma pode levar a erros na execução da macro. Deve-se atentar a todos os detalhes dentro 
+'do script após a gravação e testá-lo para verificar se o funcionamento está 100%
+
+'É uma boa maneira de aprender novas procedures, propriedades e métodos, já que o Excel irá mostrar o script
+'utilizado após o término da gravação da macro
+
+'DICA PRÁTICA: para depurar(debug) ou avaliar os comandos linha por linha, utilize a tecla F8 na janela do
+'Visual Basic dentro do Excel 
+'Cada vez que tocar a tecla F8 ela irá executar uma linha do script 
+
+'DICA PRÁTICA: se o botão 'Gravar macro" não estiver habilitado, habilite-o clicando em Segurança de Macro
+'depois feche e abra a planilha novamente 
+
+'Na aba Desenvolvedor do Excel > Gravar Macro e Parar Macro quando quiser finalizar e concluir a gravação.
+
+'DICA PRÁTICA: O botão 'Usar Referências Relativas' serve para utilizar os mesmos comandos das macros, mas 
+'não salvando a localização das células de onde foram gravados os comandos da Macro.
+
+'Algumas particularidades do Gravador de Macros:
+
+    'Não grava Procedures do Tipo Function, grava somente as do Tipo Sub
+    'Não grava variáveis declaradas
+    'Não grava condições lógicas (if)
+    'Não grava loops 
+
+
+'5. Variáveis
+
+'Type	Storage	Range of Values
+'Byte	1 byte	0 to 255
+'Integer	2 bytes	-32,768 to 32,767
+'Long	4 bytes	-2,147,483,648 to 2,147,483,648
+'Single	4 bytes	-3.402823E+38 to -1.401298E-45 for negative values 1.401298E-45 to 3.402823E+38 for positive values.
+'Double	8 bytes	-1.79769313486232e+308 to -4.94065645841247E-324 for negative values 4.94065645841247E-324 to 1.79769313486232e+308 for positive values.
+'Currency	8 bytes	-922,337,203,685,477.5808 to 922,337,203,685,477.5807
+'Decimal	12 bytes	+/- 79,228,162,514,264,337,593,543,950,335 if no decimal is use +/- 7.9228162514264337593543950335 (28 decimal places)
+'String (fixed Length)	Length of string	1 to 65,400 characters
+'String (Variable Length)	Length + 10 bytes	0 to 2 billion characters
+'Boolean	2 bytes	True or False
+'Date	8 bytes	January 1, 100 to December 31, 9999
+'Object	4 bytes	Any embedded object
+'Variant(numeric)	16 bytes	Any value as large as Double
+'Variant(text)	Length+22 bytes	Same as variable-length string
+
+'5.1. Exibindo o tipo da variável
+
+'O tipo da variável pode ser exibido no campo de Verificação Imediata através do método TypeName()
+'veja o exemplo abaixo:
+
+Sub Exibindo_o_Tipo_daVariável()
+variable_name = True
+Debug.Print variable_name, TypeName(variable_name) 
+'O método Print (da classe Debug) irá imprimir na área de Verificação Imediata o valor de variable_name
+'O método Typename() irá imprmir o tipo de variável que variable_name possui, neste exemplo: Boolean 
+
+End Sub 
+
+'DICA PRÁTICA: Se quiser quebrar uma linha isso pode ser feito no VBA usando space + underscore 
+'Veja um exemplo abaixo:
+
+'Comando escrito em uma linha
+Dim a As Integer, b As Integer, c As Integer, d As Integer
+'Comando escrito em duas linhas
+Dim a As Integer, b As Integer, _ 
+c As Integer, d As Integer
+
+'5.2. Declarando variáveis 
+
+'DICA PRÁTICA: é uma boa prática declarar a variável já com o seu tipo.
+'Isso economiza consumo de processamento já que o Excel não precisará reconhecer/procurar o tipo de variável
+'Veja no exemplo abaixo:
+
+Sub Declarando_variavel()
+Dim varaiable_name As String
+varaiable_name = "André"
+End Sub
+
+'DICA PRÁTICA: paraa que nenhuma variável seja inputada sem que seja declarado também o seu tipo,
+'podemos utilizar o comando 'Option Explicit' no início do script(primeira linha do script), 
+'ele não deixará que o script seja executado sem que algum tipo de variável não esteja declarado.
+
+'5.3. Escopo de variáveis
+
+'Mais exemplos e sintaxe do escopo das variáveis podem ser encontrados neste vídeo:
+'https://www.youtube.com/watch?v=SpnWO6GOvrY&list=PL3A6U40JUYCi4njVx59-vaUxYkG0yRO4m&index=11
+
+'Tipos de Escopo de Variáveis: Dim, Static e Public
+
+'Variáveis do Tipo Local (nivel de Procedures): as variáveis são declaradas dentro das Procedures
+Sub CalcularX()
+Dim a As Integer, b As Integer, c As Integer
+a = 1
+b = 2
+c = a + b
+End Sub
+
+'Variáveis de Nível de Módulo: a variável declarada no módulo é acessada por todas as procedures deste módulo
+'Neste exemplo declaramos c como Variável em nível de módulo, então todas as procedures deste módulo poderão acessá-la
+Dim c As Integer
+Sub CalcularX()
+Dim a As Integer, b As Integer
+a = 1
+b = 2
+c = a + b
+End Sub
+
+'Variáveis do Tipo Global (nível Público): a variável declarada pode ser acessada por todos os módulos 
+'Neste exemplo a variável c foi declarada pública e poderá ser acessada por qualquer outro módulo do Excel
+Public c As Integer
+Sub CalcularX()
+Dim a As Integer, b As Integer, c As Integer
+a = 1
+b = 2
+c = a + b
+End Sub
+
+'Variáveis do Tipo Estática: a variável declarada não terá seu valor resetado quando a Procedure tiver sido finalizada.
+'Importante: só pode ser declarada localmente
+
+'Neste exemplo, a variável c foi declarada como 'Static' e se executarmos esta procedure novamente,
+'veremos que o valor de c não voltará ao seu valor original
+Sub CalcularX()
+Dim a As Integer, b As Integer
+Static c As Integer
+a = 1
+b = 2
+c = a + b + c
+
+Debug.Print c
+'Debug.print irá printar na tela de Verificação Imediata o valor de c, se executarmos a Procedure repetidas vezes,
+'estes serão os valores: 3, 6, 9, 12,...
+
+End Sub
+
+'6. Constantes
+
+'As constantes são objetos que não tem variação, diferentemente das variáveis.
+'São muito utilizadas quando queremos atribuir nomes mais 'amigáveis' para objetos, como no exemplo abaixo:
+
+'EXEMPLO 1:
+Sub Alterar_Modo_de_Exbibicao_da_Planilha()
+
+ActiveSheet.PageSetup.Orientation = xlPortrait
+'Aqui acessamos a Propriedade ActiveSheet, sua Classe 'PageSetup' para atribuir à sua Propriedade
+'Orientation' o valor de xlPortrait, que muda a orientação de 'exibição da planilha para retrato.
+
+Debug.Print c
+'Aqui iremos printar o valor numérico da constante xlPortrait (uma constante padrão do VBA do Excel) que tem seu valor
+'atribuído a 1 (isso já vem formatado padrão), que é o valor que vai ser exibido na tela de Verificação Imediata 
+
+End Sub
+
+'EXEMPLO 2:
+'Da mesma maneira, seu quiser criar esta constante que fará a mesma alteração do formato de exibição retrato da planilha,
+'eu posso fazer declarando uma constante pública, como no exemplo abaixo:
+
+Public Const xlRetrato As Integer = 1
+
+Sub Alterar_Modo_de_Exbibicao_da_Planilha()
+ActiveSheet.PageSetup.Orientation = xlRetrato
+'Lembrando que o Excel já entende (padrão) que os valores 1 e 2 são reconhecíveis para mudança de exibição da planilha
+'retrato e paisagem, respectivamente.
+
+'EXEMPLO 3:
+'Podemos criar constantes para serem exibidas como título da janela de mensagem como na Procedure abaixo:
+'Consultar estes exemplos: https://www.exceltrick.com/formulas_macros/vba-msgbox/
+'Sempre que quisermos alterar o valor da Const alteramos em um lugar só, outra vantagem de se trabalhar com ela.
+
+Public Const TituloDaJanela As String = "Titulo da Janela"
+Sub Exibir_Mensagem()
+MsgBox "Olá, essa é uma mensagem", , TituloDaJanela
+'Dentre os vários parâmetros da finção MsgBox, preenchemos somente a mensagem (Prompt) e o Title (que possui a Constant TituloDaJanela)
+End Sub 
+
+'7. Operadores Relacionais (Relational Operators)
+
+'São 6 os sinais que comparam a relação entre dois objetos: 
+
+' > maio do que
+' < menor do que 
+' <> diferente de 
+' = igual a 
+' >= maior ou igual a 
+' <= menor ou igual a 
+
+'8. Operadores lógicos (Logical Operators)
+
+'Comparam as expressões VERDADEIRO/FALSO (Boolean) e retornam valores VERDADEIRO/FALSO como resultado:
+
+'And retorna TRUE se ambas as expressões forem verdadeiras, se não forem retorna FALSE 
+'Or retorna TRUE se pelo menos uma das expressões for verdadeira, se nenhuma for retorna FALSE
+'Not retorna TRUE se a expressão for FALSE e FALSE se a expressão for TRUE
+
+'8.1. Condição IF/THEN 
+
+'EXEMPLO 1
+
+'Veja exemplo abaixo de como é a sintaxe do VBA para a condição IF/THEN:
+'Nela, criamos uma condição para a variável 'genero', para que diferentes mensagens sejam exibidas para quando a variavel tiver 'homem' e 'mulher',
+'e outra mensagem para quando o a variavel não possuir nenhum dos dois valores.
+
+'Veja que a indentação é importante e que o THEN fica antes da quebra de linha 
+
+Sub Banheiros()
+Dim genero As String
+
+genero = "homem"
+
+If genero = "homem" Then
+    MsgBox "Vá para o homem masculino"
+ElseIf genero = "mulher" Then
+    MsgBox "Vá para o banheiro feminino"
+Else
+    MsgBox "Escolha um sexo válido"
+End If
+End Sub
+
+'EXEMPLO 2
+
+'Neste caso iremos utilizar uma InputBox (onde o usuário consegue inserir dados que serão utilizados pela procedure)
+'Iremos criar uma condição lógica para evitar erros de digitação do usuário, neste caso, a ausência de número e números escritos
+'por extenso encerrarão a Procedure.
+'Nesta procedure daremos diferentes descontos para diferentes faixas de valores inseridos pelo usuário
+
+Sub Calcular_Desconto()
+
+Dim qtde As Variant
+Dim desconto As Double
+
+qtde = InputBox("Qual é a quantidade que deseja comprar?")
+
+If qtde = " " Or Not IsNumeric(qtde) Then Exit Sub
+
+If qtde > 75 Then
+    desconto = 0.3
+ElseIf qtde > 50 Then
+    desconto = 0.2
+ElseIf qtde > 25 Then
+    desconto = 0.1
+Else
+    desconto = 0
+End If
+
+MsgBox "Oseu desconto é" & Format(desconto, "0.0%")
+'Aqui iremos exibir a mensagem e concatenar (&) com o valor da variável 'desconto'
+'Aqui também utilizaremos a Propriedade Format() para exibir o desconto em porcentagem e com uma casa decimal
+
+End Sub
+
+'EXEMPLO 3
+
+'Neste caso iremos trabalhar com uma caixa de mensagem onde o usuário apertará botões para responder perguntas,
+'para cada resposta iremos exibir uma nova mensagem na caixa de mensagem.
+'Veja que vbyesNoCancel é uma constante do Excel que guarda os valores 6,7 e 2 para yes, No e Cancel respectivamente.
+'vbQuestion é o sinal de interrogação que aparece na caixa de mensagem junto à pergunta, existem vários tipos de ícones disponíveis 
+
+Sub Caixa_de_Mensagens()
+
+    Dim resposta As Integer
+
+    resposta = MsgBox("Você está feliz hoje?", vbYesNoCancel + vbQuestion)
+ 
+    If resposta = vbYes Then
+        MsgBox "Eu já sabia!"
+        ElseIf resposta = vbNo Then
+        MsgBox "Por que está triste?"
+        Else
+        MsgBox "Por favor responda à pergunta!"
+    End If 
+
+End Sub 
+
+'8.2. Condição Select/Case
+
+'O Select Case é utilizado quando temos mais de 3 condições IF dentro de uma Procedure, ele torna 
+'a Procedure mais fácil de ser lida e compreendida, além de lidar com faixas de valores melhor do que o IF/THEN.
+'https://www.quora.com/What-is-the-benefit-of-using-Select-Case-over-If-Then-in-Excel-VBA
+
+'EXEMPLO 1:
+
+'Veja no exemplo abaixo que utilizamos SELECT/CASE para vários valores ou para faixas de valores
+'Veja que legal, usando '5 To 8', se algum número for inserido entre 5 e 8, o SELECT CASE da segunda condição 
+'será executado
+
+Sub Escolhendo_Numero()
+
+Dim numero As Integer 
+numero = 7
+
+Select Case numero
+
+    Case 1, 2, 3, 4    
+        MsgBox "Um número de 1 a 4 foi inserido"
+    Case 5 To 8
+        MsgBox "Um número de 5 a 8 foi inserido"
+    Case 9
+        MsgBox "O 9 foi inserido"
+    Case Else
+        MsgBox "Nenhum número válido e inteiro foi inserido"
+
+End Select
+
+End Sub
+
+'DICA PRÁTICA: Eu posso escrever as linhas dentro de CASE eu posso colocar na mesma linha do CASE, somente quando tenho somente uma linha
+'indentada, separando-os por ':'. A Procedure fica mais fácil de ser lida e interpretada.
+'Veja a Procedure anterior escrita de uma outra forma:
+
+Sub Escolhendo_Numero()
+
+Dim numero As Integer 
+numero = 7
+
+Select Case numero
+
+    Case 1, 2, 3, 4: MsgBox "Um número de 1 a 4 foi inserido"
+    Case 5 To 8: MsgBox "Um número de 5 a 8 foi inserido"
+    Case 9: MsgBox "O 9 foi inserido"
+    Case Else: MsgBox "Nenhum número válido e inteiro foi inserido"
+
+End Select
+
+End Sub  
+
+'EXEMPLO 2:
+
+'Neste exemplo, iremos criar uma Procedure do tipo Function para estabelecer o sexo da pessoa de acordo com o seu nome.
+'Veja que neste caso já declaramos o parâmetro 'Name' e o seu tipo dentro da Função, o tipo do resultado d função também já foi declarado após 
+'os parênteses 
+
+Function GetGender(Name As String) As String
+
+    Select Case Name
+        Case Is = "Verena"
+            GetGender = "Female"
+        Case Is = "André"
+            GetGender = "Male"
+        Case Else
+            GetGender = "None"
+    End Select
+
+End Function
+
+'9. Comandos de Controle de fluxo (Control flow) - LOOPS
+
+'Um comando sem controle começa no início e termina no fim, entretanto a força e utilidade da programação está na possibilidade da mudança
+'da ordem de execução dos comandos. Para isso foram criadas as estruturas de controle da programação.
+
+'Existem 4 tipos de loops no VBA:
+    'FOR/NEXT LOOP
+    'FOR/EACH LOOP
+    'DO WHILE LOOP
+    'DO UNTIL LOOP
+
+'9.1. FOR/NEXT LOOP 
+
+'Repete um grupo de códigos um número específico de vezes, nos loops FOR não existe condição TRUE/FALSE, já estabelecemos diretamente no FOR qual
+'o intervalo em que este loop irá acontecer 
+
+'Veja abaixo a explicação da sintaxe desse comando:
+
+For [contador] = [início] To [fim] [Step] 
+    [ instruções ]  
+    [ Continue For ]  
+    [ instruções ]  
+    [ Exit For ]  
+    [ instruções ]    ]  
+Next [contador]  
+
+'contador = variável numérica que controla o loop, OBRIGATÓRIA
+'início = expressão numérica que indica o quando o loop inicia, OBRIGATÓRIA
+'fim = expressão numérica que indica o quando o loop termina, OBRIGATÓRIA
+'Step = informa a quantidade numérica que será adicionada ao contador a cada rodada do loop, OPCIONAL
+'Continue For = transfere o controle para o próximo loop, OPCIONAL
+'Exit For = transfere o controle para fora do loop, OPCIONAL
+'Next = termina o loop, OBRIGATÓRIA
+
+'DICA PRÁTICA: VEJA QUE AQUI UTILIZAMOS 'To' para definir a faixa de valores que o loop irá percorrer, como usado nas Procedures com SELECT/CASE
+
+'EXEMPLO 1
+'Nessa Procedure iremos mostrar os valores de 2 em 2 até que atinja 100, iremos imprimir todos os números na área de Verificação Imediata com o comando 
+'Debug.Print 
+
+Sub Mostrar_ate_cem()
+
+For i = 1 To 100 Step 2 
+'Se invertermos o comando, (For i = 100 To 1) ele irá exibir os números em ordem decrescente
+'Se colocarmos Step -2, (for i =100 To 1 Step -2) ele irá exibir os números em ordem decrescente de 2 em 2    
+    Debug.Print i
+Next i 
+
+End Sub
+
+'EXEMPLO 2
+'Nessa Procedure iremos criar uma Macro para preenchimento de 7 células com 7 datas, da célula B3 para baixo. Cada valor da data será igual à data do
+'dia anterior + 1.
+
+Sub Preencher_datas()
+
+Dim i As Integer 
+For i = 0 To 6
+    Range("B3").Offset(i).Value = Date + i 
+    'Range informa onde está a primeira célula que será preenchida
+    'offset informa quantas linhas iremos deslocar
+    'value irá armazenar o valor na posição de célula informada anteriormente igual ao valor da data mais o valor da rodada do loop
+Next i
+
+End Sub
+
+'EXEMPLO 3:
+'Neste exemplo iremos criar uma Sub Procedure que irá preencher as células de uma determinada planilha 
+
+Sub FillNextCell()
+    
+    Sheets("Minha planilha").Select 'Aqui direcionei em qual planilha irei criar os dados
+    Dim i As Integer 'Aqui declarei a variável i do tipo Integer
+    
+    For i = 1 To 6 'Este loop só acontece 6 vezes
+        Cells(i, 1).Value = i 'E preencherá as 6 células na posição de linha indicada pela variável i, na primeira coluna.
+    Next i
+    
+End Sub 
+
+'EXEMPLO 4:
+'Neste exemplo iremos criar uma Sub Procedure para inserir novas abas em uma planilha.
+'O número de abas será definido pelo usuário através do Função InputBox da classe Application 
+
+Sub CreatingNewSheets()
+
+    Dim contador As Integer, numero_de_abas As Integer 'Aqui definimos as variáveis contador e numero_de_abas
+    numero_de_abas = Application.InputBox("Quantas abas terá a planilha?", _
+    "Número de abas da planilha", , , , , , 1)
+    'Esta variável irá armazenar o número de abas informado pelo usuário
+    'Lembre-se de que espaço + underline quebra o texto do script para outra linha
+    'Dentro da InputBox colocamos a pergunta e o título da caixa de interação
+    
+    If numero_de_abas = False Then 'Se o valor inserido for diferente de um número ou 0, a condição será FALSE e fecharemos a Sub Procedure
+        Exit Sub
+    Else 'Se o valor for TRUE para a variável iremos acionar o loop que irá executar a função Add, criando uma aba pra cada volta do loop 
+        For contador = 1 To numero_de_abas
+            Worksheets.Add
+        Next contador 'A cada fim de volta do loop incrementamos o valor da variável contador em 1 (default) 
+    End If
+End Sub
+
+'9.2. FOR EACH LOOP 
+
+'O FOR EACH LOOP é bem parecido com o FOR NEXT LOOP, com a única diferença que ao invés de interagir com números, o FOR EACH LOOP interage com
+'objetos ou listas de objetos.
+
+'Um exemplo de objeto: uma aba da planilha, um exemplo de coleção de objetos: uma planilha do excel (possui várias abas).
+'Outro exemplo, uma célula é um objeto em faixa de células, a faixa de células é uma coleção de objetos.
+
+'EXEMPLO 1:
+
+'Neste exemplo criamos uma Sub procedure que irá mostrar o nome de cada aba da planilha em questão.
+
+Sub PrintTheNameOfWorksheet()
+    
+    Dim ws As Worksheet 'Aqui definimos ws como um objeto do tipo WORKSHEET (que se refere às abas da planilha). Existe uma lista de Objetos pré-definidos no EXCEL.
+
+    For Each ws In Worksheets 'Para cada aba(ws) da planilha (Worksheets) 'DICA PRÁTICA: Não se esqueça de que aqui o objeto fica no plural com s !!!!
+        ws.Select 'Aqui selecionamos a aba
+        MsgBox (ws.Name) 'Aqui imprimimos o nome da aba na janela da macro 
+    Next ws 'Aqui icrementamos o valor de ws para que o loop percorra todas as abas da planilha 
+
+End Sub
+
+'EXEMPLO 2:
+
+'Neste exemplo criaremos uma macro que irá colorir células que apresentem um determinado valor.
+
+Sub HighlightCellsWithColorBasedOnSelection()
+
+    Dim faixa_de_celulas As Range, celula As Range 'Aqui definimos as variáveis celula e faixa_de_celulas (objetos) e suas classes de objetos (Range)
+    
+    Set faixa_de_celulas = Selection 'DICA PRÁTICA: sempre que formos atribuir algo a um objeto precisamos utilizar SET
+    
+    For Each celula In faixa_de_celulas 'Para cada célula na faixa de células 
+    celula.Select 'Iremos selecionar cada célula da faixa de células 
+    
+        If celula.Value >= 100 Then 'Em cada seleção de célula iremos rodar este loop e para cada valor maior do que 100
+            
+            With Selection.Interior 'iremos alterar a cor do interior da célula para amarelo, esta parte pegamos através do gravador de macros
+            .Color = 65535
+            End With
+        
+        Else 'Caso o valor não seja maior do que 100
+            
+            With Selection.Interior 'Deixaremos o interior sem configuração (.Pattern = xlNone)
+            .Pattern = xlNone
+            End With
+                        
+        End If 'e terminaremos o loop
+    
+    Next celula 'e prosseguimos para a próxima célula
+
+End Sub
+
+
+'9.3. DO WHILE LOOP 
+
+'Executa o código dentro do loop enquanto uma condição seja TRUE ou até que uma condição se torne TRUE
+
+'EXEMPLO 1:
+
+'Nesta Sub Procedure iremos selecionar a aba 'Minha Planilha' e limpar todas as células da planilha. 
+'Depois iremos incrementar o valor da célula A1 até que ela atinja o valor 2, aí o loop irá parar.
+
+Sub TestDoWhile()
+    
+    Sheets("Minha Planilha").Select
+    Cells.ClearContents 'A função ClearContents da classe Cells, limpa todas as células da planilha
+    
+    Do While Range("A1").Value < 2  'A propriedade da classe Range irá trazer o valor presente na célula A1
+    Range("A1").Value = Range("A1").Value + 1
+    Loop 
+
+End Sub
+    
+'EXEMPLO 2:
+
+'Nesta Sub Procedure iremos inserir valores em linhas de uma mesma coluna através do DO WHILE loop.
+'Pra cada valor inserido na célula, iremos descer 1 linha na mesma coluna até que a quinta linha seja preenchida.
+
+Sub InsertValuesInRowColumns()
+    
+    Dim num As Integer, xlinha As Long, xcoluna As Long
+    Sheets("Minha Planilha").Select 'Aqui selecionamos a planilha onde os dados serão inseridos
+    Cells.ClearContents 'A função ClearContents, da classe Cells, limpa todas as células da planilha
+    
+    num = 10
+    xlinha = 1
+    xcoluna = 1
+    
+    Do While xlinha <= 5
+        Cells(xlinha, xcoluna).Value = num 'Aqui definimos as variáveis xlinha e xcoluna do objeto 'Cells', isso mostrará onde os valores serão inseridos
+        xlinha = xlinha + 1
+        num = num + 10
+    Loop
+
+End Sub
+
+'Essa Sub procedure irá criar os valores 10, 20, 30, 40, 50 nas células A1, A2, A3, A4, e A5.
+
+'9.4. DO UNTIL LOOP 
+
+'Executa o código dentro do loop enquanto uma condição seja FALSE, quando a condição se torna TRUE ele se encerra
+
+'EXEMPLO 1:
+
+'Nesta Sub Procedure iremos selecionar a aba 'Minha Planilha' e limpar todas as células da planilha. 
+'Depois iremos incrementar o valor da célula A1 até que ela atinja o valor 2, aí o loop irá parar.
+
+Sub TestDoWhile()
+    
+    Sheets("Minha Planilha").Select
+    Cells.ClearContents 'A função ClearContents da classe Cells, limpa todas as células da planilha selecionada acima
+    
+    Do Until Range("A1").Value > 2  'Veja que a diferença deste comando para o Do While é que a condição tem que ser falsa para que ele execute o comando abaixo
+        Range("A1").Value = Range("A1").Value + 1
+    Loop 
+
+End Sub
+
+'EXEMPLO 2:
+
+'Suponhamos que você tenha uma planilha em que em uma coluna você tenha vários valores em branco. Você quer apagar todas as linhas que não possuírem valor.
+'Esta Sub Procedure irá excluir as linhas em branco de uma planilha
+
+Sub DeleteBlankRows()
+
+    Dim linha As Long, ultima_linha As Long
+    linha = 1 'Aqui definimos que a primeira linha com valores é a linha 1
+    ultima_linha = Range("A1048576").End(xlUp).Row 'Aqui iremos encontrar dentro da faixa coluna A : linha 1048576, qual a última linha que possui valor
+    'e retornar o valor que representa o número da linha (Row)
+    
+    Do Until linha = ultima_linha 'O loop irá continuar executando o comando até que o valor da linha seja igual ao valor da última linha 
+    
+        If Cells(linha, 1).Value = "" Then 'Se o valor dentro da célula representada pelo valor de 'linha' na coluna 1 for vazio(""), executar os comandos abaixo:
+            Cells(linha, 1).Select 'Selecionar a linha 
+            Selection.EntireRow.Delete 'Deletar toda a linha selecionada
+            linha = linha - 1 'Diminuir 1 do valor da variável 'linha' para que o loop continue se movendo para baixo
+            ultima_linha = ultima_linha - 1 'Diminuir 1 do valor da variável 'ultima_linha' para que o loop continue se movendo para baixo
+        End If
+    
+    linha = linha + 1 'Aqui incrementamos o valor da linha para que o loop percorra toda a faixa de valores 
+    
+    Loop
+
+End Sub 
+
+'EXEMPLO 3:
+
+'Neste exemplo, iremos criar uma Sub Procedure para encontrar a posição da última linha com valores de uma planilha (pode ser usada 
+'da mesma maneira para encontrar a última coluna). 
+
+'Isso é bem útil em casos onde precismaos definir as dimensões de uma planilha para executar algo (copiar os dados, fazer um procv, etc)
+   
+Sub FindLastRowWithData()
+
+    Dim ultima_linha As Long, linha As Long 'Aqui definimos as variáveis e seu tipo
+    linha = 1 'Definimos 1 para a linha porque sabemos que os dados (neste exemplo) começam na linha 1
+    
+    Do Until Cells(linha, 2).Value = "" 'Aqui definimos que o loop irá rodar até que o valor da célula encontrado seja vazio ("") 
+        linha = linha + 1 'Enquanto a condição for FALSE incrementamos em 1 o valor da linha para que ele desça até encontrar a célula vazia
+    Loop
+    
+    ultima_linha = linha - 1 'Aqui encontramos o valor da útilma linha como sendo o valor da posição da primeira linha vazia - 1, que é a referência
+    'última linha com dados
+    
+End Sub
+
+'DICA PRÁTICA: a função aleatório() cria dados aleatórios em uma planilha facilmente, boa dica para preencher uma planilha com dados rapidamente
+
+'10. Utilizando 'Pontos de Interrupção' (Break points) e 'Janela Variáveis Locais'
+
+'Os Pontos de Interrupção podem ser colocados ao clicar sobre uma linha de código com o botão direito > acessando 'Alternar'
+'Servem para marcar o script para que quando o código estiver rodando ele pare sobre este 'Break Point' 
+
+'A Janela Variáveis Locais pode ser exibida clicando com o botão direito sobre o cabeçalho da Janela do Visual Basic > clicando em Depurar
+'O botão que abre esta janela aparecerá junto com outros botões
+'A função desta janela é mostrar para o usuário as variáveis dentro do módulo que está sendo executado e seus valores.
+
+'A combinação do uso destas duas funcionalidades ajuda para verificar se o programa está funcionando corretamente, ou se está alocando os devidos
+'valores sobre as variáveis criadas.
+
+'11. Definindo Parâmetros para Procedures e Chamando Procedures dentro de outras Procedures
+
+'Uma Procedure pode chamar uma ou mais Procedures dentro de sua estrutura através do comando 'Call'
+'Veja no exemplo abaixo:
+
+'Aqui definimos a Procedure que será chamada, neste exemplo definimos duas 'strings' como parâmetros da Procedure 
+Sub Outra_Procedure(string_value1 As String, string_value2 As String)
+
+    MsgBox (string_value1 & " " & string_value2)
+    'Aqui definimos que o valor destas 'strings' serão exibidas pela função MsgBox()
+    'DICA PRÁTICA: o e comercial (ampersand) irá concatenar as duas strings e o espaço entre elas na janela de exibição da mensagem  
+
+End Sub
+
+'Aqui definimos a Procedure que irá chamar a Outra_Procedure() já passando os valores que queremos que sejam impressos como parâmetros 
+'no comando Call()
+Sub Chamando_Outra_Procedure()
+    Call Outra_Procedure("Value for string 1", "Value for string 2")
+End Sub
+
+'11. Estrutura ou Conjunto de Dados (Arrays)
+
+'O conjunto de dados é uma forma organizada e escalável de armazenar e manter uma base de dados. 
+
+'Por exemplo, o valor de uma célula que anteriormente era definido com range.value() agora é definido como um INDEX, ou seja, a posição em que este
+'valor está posicionado no conjunto de valores.
+
+'As arrays podem ter uma dimensão ou várias dimensões, por exemplo (0), ou (0,0,0,0...). Cada número indica o INDEX e cada posição se refere à uma dimensão.
+'Geralmente são utilizdas somente 2 dimensões. Especialmente no excel, para se referir ao número da linha e número da coluna,por exemplo (0,1) se 
+'refere à primeira linha e segunda coluna.
+
+'DICA PRÁTICA: no Visual Basic, o tamanho de uma 'array' é especificado pelo 'index' mais alto, ou seja, uma array que possui 2 valores
+'terá 'index' de 1, que define o seu tamanho. Veja exemplo abaixo:
+Dim names(2) As String 'O 2 dentro do parênteses representa o maior index da faixa de index dentro dessa array 
+
+'EXEMPLO 1:
+'Neste exemplo iremos criar valores para uma array e depois criar um loop para pegar os dados dessa array e colocá-los em uma planilha 
+
+Sub PopulateAnArrayAndLoopOverIt()
+
+    Dim Names(2) As String 'O conjunto de dados 'Names' terá 3 valores pois (2) representa o index mais alto do conjunto (0,1,2)
+    Dim i As Integer 'Aqui declaramos a variável que 'i' contará os loops para inserir os valores abaixo
+    
+    Names(0) = "André"
+    Names(1) = "Verena"
+    Names(2) = "Plantas"
+    'Aqui estabelecemos o início (0) e o fim com a função UBound(Nome da array, dimensão da array), essa função retorna o index mais alto da array
+    For i = 0 To UBound(Names, 1) 
+        Cells(i + 1, 1).Value = Names(i) 
+        'Aqui definimos que a cada vez que o loop for executado, a posição de célula correspondente será preenchida com o valor de Names em que o contador 
+        'estiver no momento  
+    Next i
+        
+End Sub  
+
+'EXEMPLO 2:
+'Neste exemplo iremos preencher uma array com os dados de uma planilha, depois iremos exibir uma mensagem através de um loop nessa array 
+
+Sub PopulateAnArrayUsingWorksheetData()
+
+    Dim meses(11) As String 'Aqui definimos o nome, tipo e tamanho da array (11 é o index mais alto)
+    Dim i As Integer 'Aqui definimos o contador do loop 
+    Dim numero_da_linha As Integer 'Aqui definimos o número da linha
+    
+    i = 0
+    numero_de_linha = 2 'Começamos na linha 2 porque na linha 1 tem o cabeçalho 'Mês'
+    
+    Do Until Cells(numero_de_linha, 1).Value = "" 'Iremos executar o loop até que ele encontre uma célula vazia na coluna 1
+        
+        meses(i) = Cells(numero_de_linha, 1).Value 'Cada objeto de 'meses' será preenchido com o valor da posição informada por numero_de_linha da coluna 1
+        i = i + 1 'Após cada volta do loop iremos incrementar o contador 'i' em 1 para que ele preencha a array 'meses'
+        numero_de_linha = numero_de_linha + 1 'Após cada volta do loop iremos incrementar também o número da linha 
+    
+    Loop
+    
+    For i = 0 To UBound(meses, 1) 'Aqui zeramos o contador 'i' e criamos o loop para ir até o maior index da array 'meses', 1 mostra a dimensão da array
+        
+        If meses(i) = MonthName(Month(Date)) Then 'Se o nome do mês dentro da array coincidir com o nome retornado pela função Monthname(),
+            MsgBox ("O mês atual é " & MonthName(Month(Date))) 'iremos mostrar uma MsgBox
+           'DICA PRÁTICA: Prestar atenção no idioma pois a função MonthName() irá retornar o nome do mês em português (se o Excel estiver em POR) e minúsculo,
+           'por exemplo, a função MonthName() retorna 'agosto' e os nomes dos meses que inseri na planilha estão no mesmo formato (português e minusculo).
+        End If
+        
+    Next i
+    
+End Sub 
+
+'DICA PRÁTICA: Utilizando 'Option Base 1' na primeira linha do Módulo, nós podemos alterar e definir que o index mais baixo será 1 e não 0 (default).
+
+'EXEMPLO 3:
+'Neste exemplo iremos criar uma Função que irá calcular a conversão de 4 tipos de moeda para USD utilizando uma array.
+
+Function ConvertToUSD(simbolo_da_moeda As String, valor As Double) As Double
+'Aqui declaro as 2 variáveis: uma com o símbolo da moeda e outra com o valor inserido, os seus tipos e por fim o tipo do resultado da Função 
+    
+    Dim taxas_de_conversao(3,2) As Variant, i As Integer 
+    'Aqui declaramos a array e o contador do loop, bem como os seus tipos 
+    'A array terá 2 dimensões (4 linhas, 3 colunas) 
+    
+    'Esta é a primeira linha da "tabela" 
+    taxas_de_conversao(0,0) = "Canadá"
+    taxas_de_conversao(0,1) = "CAD"
+    taxas_de_conversao(0,2) = 1.05
+    
+    'Esta é a segunda linha da "tabela" 
+    taxas_de_conversao(1,0) = "Brasil"
+    taxas_de_conversao(1,1) = "BRL"
+    taxas_de_conversao(1,2) = 3.95
+    
+    'Esta é a terceira linha da "tabela" 
+    taxas_de_conversao(2,0) = "Inglaterra"
+    taxas_de_conversao(2,1) = "EUR"
+    taxas_de_conversao(2,2) = 2.1
+    
+    'Esta é a quarta linha da "tabela" 
+    taxas_de_conversao(3,0) = "Japão"
+    taxas_de_conversao(3,1) = "JPN"
+    taxas_de_conversao(3,2) = 0.07
+
+    For i = 0 To UBound(taxas_de_conversao, 1) 
+    'Aqui definimos o contador igual a zero no início e o fim igual ao valor máximo do index da array
+    'Definimos também que iremos rodar o loop pelos dados da dimensão 1
+    
+        If simbolo_da_moeda = taxas_de_conversao(i, 1) Then
+            ConvertToUSD = valor * taxas_de_conversao(i, 2)
+        End If 
+        'Se o simbolo da moeda escolhido pelo usuário for igual ao presente na array de taxas de conversão, 
+        'então a função ConvertToUSD retornará o valor multiplicado pela taxa de conversão 
+        
+End Function 
+
+'EXEMPLO 4:
+'Neste exemplo iremos utilizar/criar uma array à partir de dados de uma planilha e depois acessar os dados desta array 
+'e colocá-los de volta na planilha
+
+Sub Populate2DArrayFromExcel() 
+    'Aqui definimos as variáveis da função
+    Dim taxas_de_conversao(3,2) As Variant, _ 'esta é a array que terá 4 linhas e 3 colunas representadas pelo maior index de cada dentro do parênteses   
+    linha As Long, coluna As Long, _ 'representam as variáveis que usaremos para mover para a primeira e segunda dimensão da planilha
+    index_linha As Long, index_coluna As Long, _ 'representam as variáveis que usaremos para mover o loop dentro da array em sua criação 
+    i As Long, j As Long 'representam os contadores que usaremos para mover dentro da primeira(i) e segunda dimensão(j) da array, e copiá-la para o excel 
+    
+    linha = 2 'na planilha, esta é a posição da primeira linha de dados que iremos copiar para a array
+    coluna = 3 'na planilha, esta é a posição da primeira coluna de dados que iremos copiar para a array
+    index_linha = 0 'na array, esta é a posição onde os dados da primeira linha da planilha serão copiados
+    index_coluna = 0 'na array, esta é a posição onde os dados da primeira coluna da planilha serão copiados
+    
+    'Como precisamos caminhar ao mesmo tempo pela linha e pela coluna da planilha para ir pegando os valores, criamos um loop dentro do outro
+    Do Until Cells(linha, coluna).Value = "" 'Este loop irá caminhar pelas linhas da planilha 
+        
+        Do Until Cells(linha, coluna).Value = "" 'Este loop irá caminhar pelas colunas da planilha ao mesmo tempo  
+            taxas_de_conversao(index_linha, index_coluna) = Cells(linha, coluna).Value
+            'a cada giro do loop ele irá atribuir os valores da linha e coluna da planilha aos valores de index da array taxas_de_conversao
+            coluna = coluna + 1 'ao fim de cada loop ele irá aumentar o valor da coluna para caminhar para a direita e pegar mais um valor da coluna
+            index_coluna = index_coluna + 1 'ao fim de cada loop ele irá aumentar o valor do index da array, inserindo os valores correspondentes 
+        Loop 
+    
+    coluna = 3 'Ao terminar o loop para a direita, temos que retornar à primeira coluna que possui os valores (nesse caso os valores começam na coluna 3), 
+    linha = linha + 1 'só que agora iremos caminhar na linha inferior
+    index_coluna = 0 'Fazemos o mesmo com os 'index' da array para que os valores caminhem junto e se correspondam
+    index_linha = index_linha + 1
+    Loop
+    
+    'Agora iremos posicionar o destino onde iremos copiar os dados da array criada, nese caso começaremos na linha 8 e coluna 3.
+    'Da mesma maneira que utilizamos 2 loops para criar a array, usaremos 2 loops para percorrer os index de linhas e colunas na array e copiá-las 
+    'para o excel.
+    linha = 8
+    coluna = 3
+    
+    For i = 0 To UBound(taxas_de_conversao, 1) 'Iremos percorrer com o loop desde o contador 0 até o o index mais alto da primeira dimensão (linha) da array
+        
+        For j = 0 To UBound(taxas_de_conversao, 2) 'Com este loop iremos percorrer desde contador 0 até o index mais alto da segunda dimensão (coluna) da array
+            Cells(linha, coluna).Value = taxas_de_conversao(i, j) 'Aí iremos copiar os valores da array e posicioná-los na planilha 
+            coluna = coluna + 1 'em cada loop iremos incrementar o valor da coluna da planilha onde os valores serão copiados 
+        Next
+    'A cada fim de loop da segunda dimensão (o que percorre as 'colunas' da array) iremos incrementar o valor da linha da planilha e voltar à
+    'coluna 3 onde queremos que os valores sejam copiados.
+    coluna = 3
+    linha = linha + 1        
+    Next 
+    
+End Sub 
+
+'EXEMPLO 5: Array para armazenar células em que foram retirados espaços extras, depois colamos essa array em uma nova Planilha.
+
+Sub Insert_Data_On_Array_And_Copy_Trim_To_Sheet()
+    
+    Dim dados_array(755, 56) As Variant, i As Long 'a planilha tem 754 linhas e 55 colunas
+    Dim linha As Long, coluna As Long
+    Dim index_linha As Long, index_coluna As Long
+    Dim a As Long, b As Long
+        
+    Sheets("Planilha1").Select
+    linha = 1
+    coluna = 1
+    index_linha = 0
+    index_coluna = 0
+    
+    Do Until Cells(linha, coluna).Value = ""
+        
+        Do Until Cells(linha, coluna).Value = ""
+            dados_array(index_linha, index_coluna) = Application.Trim(Cells(linha, coluna).Value)
+            coluna = coluna + 1
+            index_coluna = index_coluna + 1
+        Loop
+        
+    coluna = 1
+    linha = linha + 1
+    index_coluna = 0
+    index_linha = index_linha + 1
+    
+    Loop
+    
+    Sheets("Planilha2").Select
+    linha = 1
+    coluna = 1
+    
+    For a = 0 To UBound(dados_array, 1)
+    
+        For b = 0 To UBound(dados_array, 2)
+            Cells(linha, coluna).Value = dados_array(a, b)
+            coluna = coluna + 1
+        Next
+    
+    coluna = 1
+    linha = linha + 1
+    
+    Next
+    
+    MsgBox ("Os espaços extras nas células foram removidos com êxito.")
+    
+End Sub
+
+'12. Estrutura de Dados Dinâmica (Dynamic Arrays)
+
+'Vimos no tópico 11 que o tamanho da Array é definida logo quando ela é declarada, mas podemos criá-la sem especificar seu tamanho, redefinindo-a 
+'dentro do script das Procedures. Veja no exemplo abaixo como ela é redefinida dentro do loop que aumenta o seu tamanho de acordo com os
+'valores que encontra.
+
+'EXEMPLO 1:
+'Nesta Sub Procedure iremos criar uma Array que não terá tamanho definido, ela será aumentada conforme as cidades de um determinado Estado
+'forem sendo encontradas na planilha.
+
+Sub OneDimensionDynamicArray()
+
+    Dim Cidade() As String 'Aqui declaramos a array sem nenhum valor máximo de index dentro dela, uma Array Dinâmica 
+    Dim linha As Long, i As Long 'Aqui declaramos a linha que será usada pelo loop para percorrer a planilha onde estão os dados, i será o index da array 
+    
+    i = 0 
+    linha = 2 'Começaremos na linha 2 pois os dados começam na linha 2 da planilha 
+    
+    'O comando ReDim() redefine o tamanho da Array para 0, ou seja, ela só poderá receber um valor somente.
+    'Isto é só para mostrar que quando temos uma array com sua capacidade máxima atingida, ela excluirá o valor antigo do index para 
+    'ocupá-lo com o valor atual. Nesse caso, na planilha tínhamos Sete Lagoas armazenada no index 0 mas depois que o loop abaixo encontra Uberlândia na
+    'planilha, ele descarta Sete Lagoas do index 0 para colocar Uberlândia em seu lugar.
+    ReDim Cidade(0) 
+    
+    'No loop abaixo iremos colocar na array todos as cidades que forem do Estado MG.
+    Do Until Cells(linha, 8).Value = "" 'O loop irá continuar até encontrar uma célula vazia
+        If Cells(linha, 8). Value = "MG" Then
+            Cidade(i) = Cells(linha, 7).Value 'A cada Estado MG encontrado na coluna Estado(8), iremos pegar o valor da coluna Cidade(7) e colocar na array 
+            i = i + 1 'Aqui incrementamos o tamanho da Array, aumentando o valor do index 
+            ReDim Preserve Cidade(i) 
+            'O comando 'ReDim Preserve' aumenta a Array de acordo com os dados que forem encontrados, sem que nenhum valor seja perdido
+            'Ou seja, como está dentro do loop, o valor do index e o redimensionamento da array só irá acontecer se os valores forem encontrados
+        End If
+    linha = linha + 1 'Ao fim de cada loop descemos para a próxima linha da planilha
+    Loop 
+ReDim Preserve Cidade(i - 1) 
+'Como em cada fim de loop incrementamos o valor de i, no fim esta Array terá o último valor em branco.
+'Para retirar este último elemento em branco utilizamos o comando acima.
+End Sub 
+
+'DICA PRÁTICA: O comando 'ReDim Preserve' aumenta a Array de acordo com os dados que forem encontrados sem que nenhum valor seja perdido. 
+'Já o comando 'ReDim' irá aumentar a Array mas excluindo os últimos valores.  
+
+'13. Caixas de Mensagem (Message Box)
+
+'DICA PRÁTICA, sempre que procurar uma classe/função/propriedade em F2 (bibilioteca/object browser do VBA), note que se os parâmetros possuirem colchetes [],
+'eles são opcionais.
+
+'Function MsgBox(Prompt, [Buttons As VbMsgBoxStyle = vbOKOnly], [Title], [HelpFile], [Context]) As VbMsgBoxResult
+'Esta função MsgBox possui:
+'Prompt: texto que vai na mensagem
+'[Buttons As VbMsgBoxStyle = vbOKOnly]: definem o botão OK, vbOKOnly é uma constante da classe de objetos VbMsgBoxStyle, já definido como padrão e opcional
+'[Title]: título da caixa de mensagem, opcional
+'[HelpFile]: pode ser inserido um arquivo de ajuda, opcional
+'[Context]: e uma mensagem dentro desse arquivo de ajuda, opcional (se HelpFile for definido, Context também deve ser definido.
+
+'EXEMPLO 1:
+
+Option Explicit 
+Sub MsgBoxExample()
+    Dim x As Integer
+    x = 9
+    Call MsgBox("Este é um exemplo de caixa de mensagem" & "Meu número é " & x, 5)
+    'DICA PRÁTICA: sempre que formos inserir parâmetros além do parâmetro 'Prompt' devemos utilizar o comando 'Call' 
+    'Neste exemplo, utilizamos o número para mostrar os botões 'Repetir' e 'Cancelar'. Estas constantes podem ser 
+    'definidas ou por seu nome ou pelo seu valor (neste caso, vbRetryCancel ou 5).
+End Sub
+
+'EXEMPLO 2:
+
+Sub MsgBoxExample2()
+    Dim x As Integer
+    x = 9
+    Call MsgBox("Este é um exemplo de caixa de mensagem" & "Meu número é " & x, vbRetryCancel + vbCritical)
+    'DICA PRÁTICA: sempre que formos inserir parâmetros além do parâmetro 'Prompt' devemos utilizar o comando 'Call' 
+    'Neste exemplo, exibiremos os botões 'Repetir' e 'Cancelar' e um ícone de alerta específico. Estas constantes podem ser 
+    'definidas ou por seu nome ou pelo seu valor.
+End Sub
+
+'DICA PRÁTICA: todos os valores e nomes dos parâmetros de MsgBox() estão neste link:
+'https://docs.microsoft.com/pt-br/office/vba/Language/Reference/User-Interface-Help/msgbox-function
+
+'EXEMPLO 3:
+'Aqui neste exemplo iremos utilizar o MsgBox e interagir com o botão que o usuário clicar.
+
+Sub MsgBoxExample3() 
+
+    Dim resposta As Integer
+    resposta = MsgBox("Este é um exemplo de caixa de mensagem" & "Meu número é " & x, vbRetryCancel + vbCritical)
+    
+    If resposta = 2 Then 'Se Apertar o botão 'Cancelar' exibiremos a mensagem abaixo
+        MsgBox("Você apertou Cancelar")
+    ElseIf  resposta = 4 Then 'Se apertou 'Repetir' exibiremos a mensagem abaixo
+        MsgBox("Você apertou Repetir")
+    End If
+    
+End Sub
+
+'14. Caixas de Entrada (Input Box)
+
+'As Input Box são usadas para pegar valores que são passados através de uma caixa de mensagens.
+'Por exemplo, podemos perguntar ao usuário quantas abas ele quer que a nova planilha tenha, a resposta que ele der será
+'alocada em uma variável.
+
+'DICA PRÁTICA: a função InputBox que devemos utilizar é a da classe Application pois nela conseguimos definir dentro dos seus 
+'parâmetros o tipo do valor da variável presente na resposta do usuário. Em outras palavras, podemos definir como 'string' o
+'parâmetro e somente serão aceitas respostas do tipo 'string'.
+
+'Estes são os parãmetros da função InputBox da classe Application:
+'InputBox (Prompt, Title, Default, Left, Top, HelpFile, HelpContextID, Type)
+
+'Prompt = texto que será exibido dentro da caixa de mensagem
+'Title = título da caixa de mensagem
+'Default = pode ser pré-definido um valor para a resposta do usuário, que pode ser alterado por ele
+'Left = Especifica uma posição x para a caixa de diálogo em relação ao contato superior esquerdo da tela, em pontos.
+'Top = Especifica uma posição y para a caixa de diálogo em relação ao canto superior esquerdo da tela, em pontos.
+'Helpfile = pode ser exibido um link para um arquivo de ajuda
+'HelpContextID = O número da ID de contexto do tópico da Ajuda em HelpFile.
+'Type = Especifica o tipo de dados de retorno. Se esse argumento for omitido, a caixa de diálogo retornará texto.
+
+'Estes são os tipos de valores que podem ser inseridos em uma InputBox (no parâmetro Type) pelo usuário:
+
+'Valor	Significado
+'0	Uma fórmula
+'1	Um número
+'2	Texto (uma cadeia de caracteres)
+'4	Um valor lógico (True ou False)
+'8	Uma referência de célula, como um objeto Range
+'16	Um valor de erro, como #N/A
+'64	Uma matriz de valores
+
+'Para mais informações: https://msdn.microsoft.com/pt-br/vba/excel-vba/articles/application-inputbox-method-excel?f=255&MSPPError=-2147217396
+
+'EXEMPLO 1:
+'Neste exemplo iremos perguntar ao usuário quantas abas a nova planilha terá, o resultado (pré-definido com 'integer') será armazenado em uma variável.
+
+Sub InputBoxExample()
+
+    Dim numero_de_abas As Integer 'Aqui definimos a variável e seu tipo 
+    numero_de_abas = Application.InputBox("Quantas abas terá a nova planilha?", "Adicionando abas na planilha", , , , , 1) 
+    'Dentro dos parâmetros especificamos o texto e o título da caixa de mensagem, e o tipo do valor inserido pelo usuário (nesse caso 1 = Integer)
+End Sub   
+
+'EXEMPLO 2:
+'Neste exemplo iremos criar uma Sub Procedure para encontrar o valor mais alto e a sua posição (endereço) na planilha de acordo com a faixa de células 
+'selecionada pelo usuário através da função 'InputBox'.
+
+Sub InputBoxExample2()
+
+    Dim faixa_de_celulas As Range, c As Range, valor_max As Double, endereco_max As String
+    
+    On Error GoTo clicou_cancelar 'Aqui quando o usuário apertar 'Cancelar' no InputBox não teremos um alerta de erro, iremos direto para o fim da Sub (canceled:)
+    
+    Set faixa_de_celulas = Application.InputBox("Selecione uma faixa de células", "Encontrar valor máximo", , , , , , 8)
+    'Utilizamos Set pois estamos atribuindo uma variável do tipo Range (8) ao objeto 'faixa_de_celulas'
+           
+    valor_max = faixa_de_celulas.Cells(1, 1).Value 'O valor máximo da faixa de células selecionada será o da primeira célula da faixa
+    endereco_max = faixa_de_celulas.Cells(1, 1).Address 'O endereço do maior valor da faixa também será o da primeira célula da faixa
+    
+    For Each c In faixa_de_celulas.Cells 'A partir daí fazemos o loop por todas as células selecionadas
+        If c.Value > valor_max Then 'Se o valor da célula em que o loop está naquele momento for maior do que o que está em valor_max
+            valor_max = c.Value 'iremos atribuir o valor desta célula à variável valor_max
+            endereco_max = c.Address 'e o mesmo será feito com o endereço
+        End If
+    Next c
+    
+    MsgBox ("O valor máximo entre a faixa de células selecionada é " & valor_max & " na posição " & endereco_max)
+    'Ao final iremos exibir uma mensagem para mostrar qual é o valor máximo encontrado e em qual posição na planilha ele se encontra.
+
+clicou_cancelar:
+End Sub
+
+'15. Events ou Events
+
+'Os eventos podem ser encontrados pelo caminho Desenvolvedor > Visual Basic > Duplo clique em um dos Objetos dentro de Projeto > 
+'Selecione Workbook no primeiro filtro > Veja que no segundo filtro estão todos os eventos daquela planilha (o primeiro se chama Open,
+'por exemplo).
+
+'Os eventos são Procedures executadas quando, por exemplo, criamos/excluímos uma nova aba em uma planilha.
+'Estas Procedures podem ser usadas e customizadas para otimizar tarefas do dia-dia.
+
+'EXEMPLO 1:
+'Nesta Procedure iremos criar um evento que irá grifar uma faixa de células de uma planilha com cor quando uma célula for selecionada pelo
+'usuário. Também iremos criar uma caixa de mensagem quando esta célula for selecionada.
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range)
+'Estas Procedures tem escopo privado, ou seja, outras Procedures não conseguem acessá-la.
+'Esta sintaxe foi copiada ao clicar no segundo filtro (da esquerda para a direita) e selecionando e clicando duas vezes em 'SheetSelectionChange' 
+    Dim i As Integer
+    MsgBox ("Você selecionou uma célula na linha " & Target.Row & " e coluna " & Target.Column)
+    'Targe.Row e Target.Column retornam o valor os valores da célula selecionada
+    'Toda vez que o usuário clicar em alguma célula desta planilha, uma caixa de mensagem irá aparecer mostrando a frase acima    
+
+End Sub 
+
+'EXEMPLO 2:
+'Nesta Procedure iremos grifar de amarelo a faixa de células desde a célula 1 até a célula na posição em que o usuário clicar   
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range)
+'Estas Procedures tem escopo privado, ou seja, outras Procedures não conseguem acessá-la.
+'Esta sintaxe foi copiada ao clicar no segundo filtro (da esquerda para a direita) e selecionando e clicando duas vezes em 'SheetSelectionChange'
+'Sh é a aba da planilha em que estou trabalhando
+    
+    Dim i As Integer
+    If Sh.Name = "Minha Planilha" Then 'Aqui iremos configurar esta Procedure do Evento para funcionar somente quando estivermos na aba 'Minha Planilha'
+        Cells.Interior.ColorIndex = xlNone 'ColorIndex irá apagar a cor que colocar tda vez que eu mudar de célula selecionada
+        
+        'Loop para colorir as células ao longo da coluna em que a célula selecionada está
+        For i = 1 To Target.Row 'Para todas as células desde a linha 1 até a linha onde está a célula (Target.Row)
+            Cells(i, Target.Column).Interior.ColorIndex = 6 'iremos grifar de amarelo (6) em cada posição de linha i 
+            'na coluna onde está a célula (Target.Column)
+        Next 
+        
+        'Loop para colorir as células de amarelo ao longo da linha em que a célula selecionada está
+        For i = 1 To Target.Column 'Para todas as células desde a linha 1 até a coluna onde está a célula (Target.Column)
+            Cells(Target.Row, i).Interior.ColorIndex = 6 'iremos grifar de amarelo (6) em cada posição de coluna i 
+            'e linha onde está a célula (Target.Row)
+        Next 
+    End If 
+End Sub 
+
+'16. Tabela Dinâmica (Pivot Table)
+
+'Neste tópico vamos criar Tabelas Dinânimas automatizadas e customizadas para economizar tempo.
+
+'DICA PRÁTICA: ANTES DE INICIAR A CONSTRUÇÃO DA PROCEDURE da Tabela Dinâmica, devemos acessar Fórmulas > Gerenciador de Nomes > 
+'> Clicar no botão Novo > Nomear com o nome de sua escolha, o Escopo do Nome da Função que está criando e em 'Refere-se a' colocamos
+'a função  =desloc(data_pt!$A$1;0;0;cont.valores(data_pt!$A:$A);cont.valores(data_pt!$1:$1))
+
+'A função desloc (offset) retorna uma referência a um intervalo que possui um número específico de linhas e colunas (neste caso da planilha 'data_pt')
+'A célula de referência é a A1 da planilha, os dois zeros logo após não especificam na fórmula os valores de linha e coluna, respectivamente.
+'Ao invés de especificarmos o valor da altura da faixa de dados, colocamos a fórmula 'cont.valores'(conta em inglês) que irá calcular o número de 
+'células não vazias na faixa de valores selecionada.
+'Por último, fazemos o mesmo para retornar o número de colunas preenchidas com uma outra fórmula 'cont.valores'
+
+'Por que fazemos isso? Para que toda nova linha/coluna de dados que for inserida nesta planilha seja automaticamente atualizada
+'na nossa Tabela Dinâmica. 
+
+'EXEMPLO 1:
+'Neste exemplo iremos criar uma Tabela Dinâmica customizada para exibir agregações de valores de dados de uma planilha.
+
+Sub MakePivotTable()
+    'Aqui nomemamos os objetos das classes 'PivotTable' e 'PivotCache'
+    Dim tabela_dinamica As PivotTable 'Em tabela_dinamica iremos configurar/customizar a tabela
+    Dim fonte_de_dados As PivotCache 'Em fonte_de_dados iremos configurar de onde virá a base de dados da tabela
+    
+    'Aqui selecionamos a planilha
+    Sheets("data_pt").Select
+    
+    'Aqui deletamos a Tabela Dinâmica previamente criada nesta planilha, lembre-se de que toda vez que ela for atualizada
+    'a antiga deverá ser apagada. Entre parênteses está o nome da Tabela Dinâmica
+    ActiveSheet.PivotTables("MinhaTabelaDinamicaExemplo").TableRange2.Clear
+    
+    'Aqui definimos a fonte da base de dados, 'data' é o nome da faixa de células definida dentro da função que nomeamos
+    'dentro do botão 'Gerenciador de Nomes' (ver DICA PRÁTICA desse tópico).
+    Set fonte_de_dados = ActiveWorkbook.PivotCaches.Create(xlDatabase, Range("data"))
+    'Lembrando: usamos Set para atribuir funções à um objeto
+    'Pivot.Caches.Create(xlDatabase) atribui qual o tipo de fonte de dados que iremos usar (nesse caso uma base de dados de Excel)
+    
+    'Aqui criamos a Tabela Dinâmica
+    Set tabela_dinamica = ActiveSheet.PivotTables.Add(fonte_de_dados, Range("K1"), "MinhaTabelaDinamicaExemplo")
+    'Add usará fonte_de_dados e colocará a tabela na posição da célula 'K1', por fim nomeamos a Tabela.
+    
+    'Agora criaremos os campos da tabela dinâmica
+    With tabela_dinamica
+        
+        'Em PivotFields definimos o 'index', em qual área dos 4 campos da Tabela Dinâmica, cada index será colocado.
+        .PivotFields("data").Orientation = xlColumnField  'no nosso exemplo, a coluna 'data' será colocada no campo 'Coluna'
+        .PivotFields("Descrição").Orientation = xlPageField ' a coluna 'Descrição' será colocada no campo 'Filtros'
+        .PivotFields("Categoria").Orientation = xlRowField 'a coluna 'Categoria' será colocada no campo 'Linha'
+        .PivotFields("Valor").Orientation = xlDataField 'e 'Valor' será colocada no campo 'Valores' da tabela dinâmica
+    
+        'Aqui definimos o layout da tabela dinâmica, as diferenças são sutis entre os layouts
+        .RowAxisLayout (xlTabularRow)
+    
+        'Aqui definimos o formato do número para duas casas decimais depois da vírgula
+        .DataBodyRange.NumberFormat = "0.00" 'DataBodyRange irá alterar o formato de todos os campos xlDataField
+        
+        'Aqui definimos o formato do mês e ano na tabela dinâmica
+        .ColumnRange.NumberFormat = "mmm-yy"
+    
+    End With
+    
+End Sub
+
+'Podemos automatizar mais coisas na tabela dinâmica, como mostrado no vídeo desta aula (Lesson 31.2)
+
+'17. Userforms ou Formulários (UserForm)
+
+'UserForm é uma boa maneira de interagir com o usuário e extrair algumas informações do input do usuário. 
+
+'Para abrir um, é necessário abrir a aba Visual Basic > Inserir > UserForm
+'Dentro da janela Projeto, ao clicar no ícone do UserForm 2 vezes abrimos a sua janela de exibição. 
+'Para configurá-la, clicamos no ícone de Propriedades (mão segurando cartão) para alterar
+'nome do UserForm, nome do título da janela do UserForm (Caption), etc...
+
+'Para receber o input de dados do usuário através do UserForm, devemos criar uma macro e ajustar algumas coisas na planilha
+
+'EXEMPLO 1: 
+'Neste exemplo iremos criar um UserForm para o usuário sendo que os dados do input do usuário serão armazenados na planilha.
+
+'17.1. Inserindo um botão na planilha:
+'Desenvolvedor > Inserir > Em Controles ActivesX Selecionar Botão de Comando > Arrastar e dimensionar o botão na planilha
+'Clique com o botão esquerdo em cima do botão criado > Propriedades > Altere as configurações (nome, cor, etc) da propriedade do objeto de 
+'acordo com suas preferências. 
+
+'17.2. Escrevendo o código da macro do botão para que ele abra o UserForm
+'Com o duplo clique no botão você abrirá a macro que compõe este botão.
+'Escreva o código como abaixo para que o botão abra o UserForm
+
+Private Sub btn_EnterData_Click()
+
+    frm_EnterData.Show 'Este comando irá abrir o formulário (frm_EnterData) quando o usuário clicar nele 
+
+End Sub
+
+'17.3. Com o UserForm aberto novamente, clique no ícone de Caixa de Ferramentas para começar a inserir botões, caixas de texto, etc..
+'Clicando com o botão esquerdo na Caixa de Ferramentas, podemos ver Controles Adicionais que podem ser usados no UserForm.
+
+'Iremos adicionar um rótulo (Label) no UserForm (botão com a letra A na Caixa de Ferramentas), depois clicando com o botão direito no  > Propriedades,
+'inserimos 'lbl_name' em (Name) e 'Name' dentro de Caption (Caption é o texto que será mostrado dentro do campo).
+
+'Depois inserimos uma Caixa de texto (botão escrito ab nele n Caixa de Ferramentas) e configuramos, em Propriedades, o nome da caixa de texto para
+'txt_Name 
+
+'Agora, na planilha de nome 'UserForm' eu insiro um campo 'Name' na primeira coluna e primeira linha 
+'Agora teremos que programar um pouco para fazer com que a planilha armazene o nome colocado dentro da caixa de texto. 
+
+'DICA PRÁTICA: Neste momento teremos que entrar em Fórmulas > Gerenciador de Nomes > Crie uma função como esta abaixo:
+'=DESLOC(UserForm!$A$1;CONT.VALORES(UserForm!$A:$A);0)
+'A função desloc (offset) retorna uma referência a um intervalo que possui um número específico de linhas e colunas (neste caso da planilha 'UserForm')
+'A célula de referência é a A1 da planilha, não especificamos na fórmula os valores de linha e coluna.
+'Ao invés de especificarmos o valor da altura da faixa de dados, colocamos a fórmula 'cont.valores'(fórmula conta em inglês) que irá calcular o número de 
+'células não vazias na faixa de valores selecionada.
+'Esta fórmula irá deslocar para a célula vazia desta coluna sempre.
+
+'17.4.'Agora iremos inserir um Botão de comando (presente na Caixa de Ferramentas) para enviar o nome inserido na Caixa de texto para a planilha
+'e editamos (Name) para 'btn_EnterDataClick' e Caption para 'Enter Data on Worksheet'
+
+'Para enviar o nome para a planilha, iremos programar dentro da Sub Procedure btn_EnterDataClick_Click():
+
+Private Sub btn_EnterDataClick_Click()
+
+    Dim xrow As Long 'Aqui definimos a variável
+    Sheets("UserForm").Select 'Selecionaremos a planilha 'UserForm' para inserir os dados 
+    xrow = Range("LastRow").Row 'A variável terá a posição da linha retornada por Range() utilizando a fórmula LastRow que criamos em DICA PRÁTICA (linha 1260) 
+    
+    Cells(xrow, 1).Value = txt_Name.Value 'A posição de linha informada pela variável 'xrow' e coluna 1 será atribuído ao valor inserido na Caixa de texto
+    'txt_Name 
+
+End Sub
+
+'Por último inserimos um botão (btn_CloseUserForm) para o usuário fechar o UserForm, criando um Botão de comando e programando no Evento 
+'dentro dele o seguinte código:
+
+Private Sub btn_CloseUserForm_Click()
+
+    Unload frm_EnterData 'este comando fecha o formulário
+
+End Sub
+
+'17.5. Agora iremos entrar novamente na Caixa de Ferramentas e clicar em 'Caixa de Combinação' ou ComboBox (em inglês). 
+'A ComboBox é uma mistura de lista com campo de texto, ou seja, o usuário pode selecionar de uma lista corrida ou escrever para preencher o campo.
+
+'Após inserir a ComboBox mudamos o seu nome para 'combo_Feeling' e clicamos duas vezes sobre o UserForm para arbir o código dele. Agora estamos dentro de
+'um evento (Event) que é aquela macro executada quando um objeto é aberto/fechado/modificado/deletado/etc...
+'Quando estivermos na janela de exibição de códigos do UserForm vamos até o primeiro filtro da esquerda e verificamos se 'UserForm' está selecionado,
+'depois vamos até o segundo filtro (da direita) e selecionamos 'Initialize' para programar dentro dessa Event como abaixo:
+
+Private Sub UserForm_Initialize()
+'Dentro deste 'Evento' iremos mostrar ao usuário as opções para o ComboBox quando ele for aberto.
+'Podemos inserir os campos para que o usuário selecione como abaixo:
+'combo_Feeling.AddItem "I feel good"
+'combo_Feeling.AddItem "I feel bad"
+'combo_Feeling.AddItem "Select"
+'combo_Feeling.Value = "Select" 'Aqui indicamos que o valor do objeto ComboBox será o valor inserido dentro dele (o default vai vir como 'Select')
+
+'Mas é mais eficiente, para alguns casos, inserir um loop para preencher automaticamente de acordo com a letra com que o usuário começa a escrever:
+
+    For Each letra In [Lista_ComboBox] 'Para cada letra da lista 'Lista_ComboBox' (criada em Gerenciadores de Nomes),
+        
+        combo_Feeling.AddItem letra 'iremos adicionar a palavra inteira dentro do campo da ComboBox 'combo_Feeling'
+        
+    Next letra
+
+End Sub
+
+'IMPORTANTE: não exclua dados da planilha de recebimentos de dados manualmente pois se fizer isso o 'UserForm' não irá funcionar corretamente mais.
+'Se a base de dados deve ser exlcuída ao fim do processo do usuário, isso deve ser programado dentro da Macro.
+
+'17.6. Agora adicionamos mais uma linha na Sub Procedure btn_EnterDataClick_Click() como abaixo:
+
+Private Sub btn_EnterDataClick_Click()
+
+    Dim xrow As Long 'Aqui definimos a variável
+    
+    'Nestes dois IF abaixo iremos obrigar que o usuário insira o Nome e que responda à pergunta antes de apertar o botão 'Enviar' posteriormente
+    If txt_Name.Value = "" Then
+        MsgBox ("Você deve inserir um nome")
+        Exit Sub
+    End If
+    
+    If combo_Feeling.Value = "" Then
+        MsgBox ("Você deve reponder à pergunta para continuar!")
+        Exit Sub
+    End If
+        
+    Sheets("UserForm").Select 'Selecionaremos a planilha 'UserForm' para inserir os dados 
+    xrow = Range("LastRow").Row 'A variável terá a posição da linha retornada por Range() utilizando a fórmula LastRow que criamos em DICA PRÁTICA (linha 1260) 
+    
+    Cells(xrow, 1).Value = txt_Name.Value 'A posição de linha informada pela variável 'xrow' e coluna 1 será atribuído ao valor inserido na Caixa de texto
+    'txt_Name 
+    Cells(xrow, 2).Value = combo_Feeling.Value 'O valor inserido na ComboBox 'combo_Feeling' será automaticamente inserido na planilha na coluna 2 e linha 
+    'informada pela variável 'xrow'
+    
+End Sub
